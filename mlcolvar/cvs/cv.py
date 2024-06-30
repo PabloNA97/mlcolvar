@@ -18,7 +18,8 @@ class BaseCV:
         *args,
         **kwargs,
     ):
-        """Base CV class options.
+        """
+        Base CV class options.
 
         Parameters
         ----------
@@ -30,7 +31,6 @@ class BaseCV:
             Preprocessing module, default None
         postprocessing : torch.nn.Module, optional
             Postprocessing module, default None
-
         """
         super().__init__(*args, **kwargs)
 
@@ -47,6 +47,9 @@ class BaseCV:
         self._optimizer_name = "Adam"
         self.optimizer_kwargs = {}
         self.lr_scheduler_kwargs = {}
+        self.lr_scheduler_interval = "epoch"
+        self.lr_scheduler_monitor = "valid_loss"
+        self.lr_scheduler_frequency = 1
 
         # PRE/POST
         self.preprocessing = preprocessing
@@ -88,6 +91,12 @@ class BaseCV:
                     self.optimizer_kwargs.update(options[o])
                 elif o == "lr_scheduler":
                     self.lr_scheduler_kwargs.update(options[o])
+                elif o == "lr_interval":
+                    self.lr_scheduler_interval = options[o]
+                elif o == "lr_monitor":
+                    self.lr_scheduler_monitor = options[o]
+                elif o == "lr_frequency":
+                    self.lr_scheduler_frequency = options[o]
                 else:
                     raise ValueError(
                         f'The key {o} is not available in this class. The available keys are: {", ".join(self.BLOCKS)}, optimizer and lr_scheduler.'
@@ -207,7 +216,15 @@ class BaseCV:
             scheduler_cls = self.lr_scheduler_kwargs['scheduler']
             scheduler_kwargs = {k: v for k, v in self.lr_scheduler_kwargs.items() if k != 'scheduler'}
             lr_scheduler = scheduler_cls(optimizer, **scheduler_kwargs)
-            return [optimizer] , [lr_scheduler]
+
+            lr_scheduler_config = {
+                'scheduler': lr_scheduler,
+                'interval': self.lr_scheduler_interval,
+                'monitor': self.lr_scheduler_monitor,
+                'frequency': self.lr_scheduler_frequency
+            }
+
+            return [optimizer] , [lr_scheduler_config]
         else: 
             return optimizer
 
