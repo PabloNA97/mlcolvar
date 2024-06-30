@@ -18,12 +18,12 @@ dependencies:
     # Package dependencies
   - numpy
   - pandas
-  - pytorch
+  - pytorch<2.3
   - pydantic<2
   - lightning
   - matplotlib
   - scikit-learn
-  - scipy<1.11
+  - scipy
    
     # Pip-only installs
   - pip:

@@ -14,8 +14,8 @@ dependencies:
   # Core dependencies
   - numpy
   - pandas
-  - pytorch<=2.2.0 # latest version does not define name '_accumulate' from 'torch._utils'
-  - pydantic<2    # workaround to avoid clashes with lightning
+  - pytorch<2.3
+  - pydantic<2 # workaround to avoid clashes with lightning
   - lightning
 
   # utils
@@ -23,7 +23,7 @@ dependencies:
   - nbsphinx
   - ipython
   - ipykernel
-  - scipy<1.11    # latest version does not work with kdepy
+  - scipy
 
   # Pip-only installs
   - pip:
