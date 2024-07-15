@@ -99,7 +99,7 @@ class BaseCV:
                     self.lr_scheduler_frequency = options[o]
                 else:
                     raise ValueError(
-                        f'The key {o} is not available in this class. The available keys are: {", ".join(self.BLOCKS)}, optimizer and lr_scheduler.'
+                        f'The key {o} is not available in this class. The available keys are: {", ".join(self.BLOCKS)}, optimizer, lr_scheduler, lr_interval, lr_monitor and lr_frequency.'
                     )
 
         return options
