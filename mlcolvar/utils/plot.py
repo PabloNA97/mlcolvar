@@ -255,6 +255,8 @@ def plot_metrics(
 
     ax.legend(ncol=1, frameon=False)
 
+    plt.tight_layout()
+
     if return_axs:
         return ax
     else:
