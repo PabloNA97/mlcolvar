@@ -7,4 +7,4 @@ from .core import *
 from .data import *
 from .cvs import *
 
-from ._version import __version__
+# from ._version import __version__
